@@ -1,4 +1,4 @@
-# QRIS Codex
+# QRIS D1 Watcher
 
 Automation tools for monitoring and extracting transaction data from the Mandiri QRIS merchant portal using Puppeteer and storing it in Cloudflare D1.
 

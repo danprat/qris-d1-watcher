@@ -1,5 +1,5 @@
 {
-  "name": "qriscodex",
+  "name": "qris-d1-watcher",
   "version": "0.1.0",
   "description": "Automation tools for monitoring and extracting transaction data from Mandiri QRIS merchant portal using Puppeteer and Cloudflare D1.",
   "keywords": [
@@ -16,12 +16,12 @@
   "author": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/qriscodex.git"
+    "url": "git+https://github.com/wimboro/qris-d1-watcher.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/qriscodex/issues"
+    "url": "https://github.com/wimboro/qris-d1-watcher/issues"
   },
-  "homepage": "https://github.com/yourusername/qriscodex#readme",
+  "homepage": "https://github.com/wimboro/qris-d1-watcher#readme",
   "engines": {
     "node": ">=16.0.0"
   },
