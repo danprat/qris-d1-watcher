@@ -1,0 +1,36 @@
+{
+  "name": "qriscodex",
+  "version": "0.1.0",
+  "description": "Automation tools for monitoring and extracting transaction data from Mandiri QRIS merchant portal using Puppeteer and Cloudflare D1.",
+  "keywords": [
+    "qris",
+    "mandiri",
+    "automation",
+    "puppeteer",
+    "cloudflare",
+    "d1",
+    "transactions",
+    "scraper"
+  ],
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/qriscodex.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/qriscodex/issues"
+  },
+  "homepage": "https://github.com/yourusername/qriscodex#readme",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "fetch:puppeteer": "node scripts/fetch_transactions_puppeteer.js",
+    "watch:transactions": "node scripts/watch_transactions.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "puppeteer": "^23.5.0"
+  }
+}
