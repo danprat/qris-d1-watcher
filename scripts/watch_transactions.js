@@ -175,12 +175,34 @@ async function ensureLogin(page, options = {}) {
     return;
   }
 
-  console.log('[login] Navigating to login page');
-  await page.goto(CONFIG.loginUrl, { waitUntil: 'networkidle2' });
-  await openLoginFormIfNeeded(page);
+  // Navigate directly to login page (more reliable in Docker headless)
+  const loginPageUrl = CONFIG.loginUrl.replace(/\/$/, '') + '/login';
+  console.log('[login] Navigating to login page:', loginPageUrl);
+  await page.goto(loginPageUrl, { waitUntil: 'networkidle2', timeout: 60000 });
+  
+  // Wait for page to fully load
+  await delay(3000);
+  console.log('[login] Current URL:', page.url());
 
-  if (CONFIG.usernameSelector === '' && CONFIG.passwordSelector === '') {
-    await page.waitForSelector('form', { timeout: 20000 });
+  // Try multiple selectors for form
+  let formFound = false;
+  const formSelectors = ['form', 'input[type="text"]', 'input[type="tel"]', 'input'];
+  for (const selector of formSelectors) {
+    try {
+      await page.waitForSelector(selector, { timeout: 10000 });
+      console.log('[login] Found element:', selector);
+      formFound = true;
+      break;
+    } catch (e) {
+      console.log('[login] Selector not found:', selector);
+    }
+  }
+  
+  if (!formFound) {
+    const html = await page.content();
+    console.log('[login] Page HTML length:', html.length);
+    console.log('[login] Page title:', await page.title());
+    throw new Error('Could not find login form');
   }
 
   await typeIntoField(page, {
