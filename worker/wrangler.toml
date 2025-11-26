@@ -1,0 +1,26 @@
+name = "qris-watcher"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Browser Rendering binding
+[browser]
+binding = "BROWSER"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB"
+database_name = "qris-transactions"
+database_id = "" # Jalankan: wrangler d1 create qris-transactions, lalu paste ID di sini
+
+# Scheduled trigger - every 5 minutes
+[triggers]
+crons = ["*/5 * * * *"]
+
+# Environment variables (non-secret)
+[vars]
+POLL_INTERVAL_MS = "300000"
+
+# Secrets (set via: wrangler secret put <SECRET_NAME>)
+# - MANDIRI_USERNAME
+# - MANDIRI_PASSWORD

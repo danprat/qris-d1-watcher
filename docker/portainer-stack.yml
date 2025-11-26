@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  qris-watcher:
+    image: node:20-slim
+    container_name: qris-watcher
+    restart: unless-stopped
+    working_dir: /app
+    command: >
+      bash -c "
+        apt-get update && 
+        apt-get install -y chromium git --no-install-recommends &&
+        rm -rf /var/lib/apt/lists/* &&
+        git clone https://github.com/danprat/qris-d1-watcher.git /app &&
+        npm ci --only=production &&
+        node scripts/watch_transactions.js
+      "
+    environment:
+      # Mandiri QRIS Credentials (GANTI DENGAN CREDENTIALS KAMU)
+      - MANDIRI_USERNAME=08xxxxxxxxxx
+      - MANDIRI_PASSWORD=your_password
+      
+      # Cloudflare D1 (OPSIONAL)
+      - CLOUDFLARE_ACCOUNT_ID=your_account_id
+      - CLOUDFLARE_D1_DATABASE_ID=your_database_id
+      - CLOUDFLARE_API_TOKEN=your_api_token
+      
+      # Puppeteer settings
+      - PUPPETEER_HEADLESS=true
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+      - MANDIRI_POLL_INTERVAL_MS=300000
+    volumes:
+      - qris-data:/app/data
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+volumes:
+  qris-data:

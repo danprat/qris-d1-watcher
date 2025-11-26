@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  qris-watcher:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: qris-watcher
+    restart: unless-stopped
+    environment:
+      # Mandiri QRIS Credentials
+      - MANDIRI_USERNAME=${MANDIRI_USERNAME}
+      - MANDIRI_PASSWORD=${MANDIRI_PASSWORD}
+      
+      # Cloudflare D1 (opsional - untuk simpan ke cloud)
+      - CLOUDFLARE_ACCOUNT_ID=${CLOUDFLARE_ACCOUNT_ID:-}
+      - CLOUDFLARE_D1_DATABASE_ID=${CLOUDFLARE_D1_DATABASE_ID:-}
+      - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN:-}
+      
+      # Puppeteer settings
+      - PUPPETEER_HEADLESS=true
+      - MANDIRI_POLL_INTERVAL_MS=300000
+      
+      # Chrome path di container
+      - MANDIRI_CHROME_PATH=/usr/bin/chromium
+    volumes:
+      - qris-data:/app/data
+    # Security: run as non-root
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  qris-data:

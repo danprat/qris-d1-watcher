@@ -1,0 +1,5 @@
+# Development environment variables
+# Copy this to .dev.vars and fill in your credentials
+
+MANDIRI_USERNAME=your-phone-number
+MANDIRI_PASSWORD=your-password

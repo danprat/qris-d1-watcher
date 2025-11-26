@@ -1,0 +1,20 @@
+{
+  "name": "qris-watcher",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker for monitoring Mandiri QRIS transactions",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "db:create": "wrangler d1 create qris-transactions",
+    "db:migrate": "wrangler d1 execute qris-transactions --local --file=./schema.sql",
+    "db:migrate:prod": "wrangler d1 execute qris-transactions --file=./schema.sql"
+  },
+  "devDependencies": {
+    "@cloudflare/puppeteer": "^1.0.1",
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.3.0",
+    "wrangler": "^3.91.0"
+  }
+}
