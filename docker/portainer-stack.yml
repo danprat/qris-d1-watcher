@@ -5,13 +5,13 @@ services:
     image: node:20-slim
     container_name: qris-watcher
     restart: unless-stopped
-    working_dir: /app
     command: >
       bash -c "
         apt-get update && 
         apt-get install -y chromium git --no-install-recommends &&
         rm -rf /var/lib/apt/lists/* &&
-        git clone https://github.com/danprat/qris-d1-watcher.git /app &&
+        git clone https://github.com/danprat/qris-d1-watcher.git /opt/qris &&
+        cd /opt/qris &&
         npm ci --only=production &&
         node scripts/watch_transactions.js
       "
@@ -31,7 +31,7 @@ services:
       - PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
       - MANDIRI_POLL_INTERVAL_MS=300000
     volumes:
-      - qris-data:/app/data
+      - qris-data:/opt/qris/data
     security_opt:
       - no-new-privileges:true
     deploy:

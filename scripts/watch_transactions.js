@@ -67,7 +67,20 @@ async function main() {
 
   const launchOptions = {
     headless: CONFIG.headless,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-gpu',
+      '--disable-dev-shm-usage',
+      '--disable-software-rasterizer',
+      '--no-zygote',
+      '--single-process',
+      '--disable-extensions',
+      '--disable-background-networking',
+      '--disable-default-apps',
+      '--disable-sync',
+      '--no-first-run',
+    ],
   };
   if (CONFIG.chromeExecutable) {
     launchOptions.executablePath = CONFIG.chromeExecutable;
